@@ -6,10 +6,10 @@ module Homebrew
 
     attr_reader :remote_version, :local_version
 
-    GEOSERVER_URL     = 'http://geoserver.org/'
-    VERSION_FILE      = 'version.yml'
-    DOWNLOAD_LOCATION = '/tmp'
-    HOMEBREW_PATH     = "#{Dir.home}/projects/homebrew"
+    GEOSERVER_URL     = ENV.fetch('GEOSERVER_URL', 'http://geoserver.org/')
+    VERSION_FILE      = ENV.fetch('VERSION_FILE', 'version.yml')
+    DOWNLOAD_LOCATION = ENV.fetch('DOWNLOAD_LOCATION', '/tmp')
+    HOMEBREW_PATH     = ENV.fetch('HOMEBREW_PATH', "#{Dir.home}/projects/homebrew")
 
     def initialize
       @agent = Mechanize.new
