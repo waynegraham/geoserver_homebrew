@@ -27,13 +27,16 @@ module Homebrew
       Dir.chdir(HOMEBREW_PATH) do
         `git checkout master`
         `git pull upstream master`
-        `git checkout -b #{remote_version}`
+        `git checkout -b geoserver-#{@remote_version}`
       end
     end
 
     def push_update
       Dir.chdir(HOMEBREW_PATH) do
-        `git push origin #{remote_version}`
+        `git commit -am "geoserver #{@remote_version}
+
+        update to geoserver #{@remote_version}"`
+        `git push origin geoserver-#{@remote_version}`
       end
     end
 
@@ -42,6 +45,10 @@ module Homebrew
       local = Gem::Version.new(@local_version)
 
       if remote > local
+
+        puts "Updating Homebrew"
+        update_homebrew
+
         puts "There is a new version. Downloading to /tmp"
         download_geoserver
 
@@ -101,9 +108,14 @@ class Geoserver < Formula
   def caveats; <<\-EOS.undent
     To start geoserver:
       geoserver path/to/data/dir
+
     See the Geoserver homepage for more setup information:
       brew home geoserver
     EOS
+  end
+
+  test do
+    assert_match /geoserver path/, shell_outout("\#{bin}/geoserver")
   end
 end
       BLOCK
