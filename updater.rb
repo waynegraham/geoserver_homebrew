@@ -6,10 +6,10 @@ module Homebrew
 
     attr_reader :remote_version, :local_version
 
-    GEOSERVER_URL     = ENV.fetch('GEOSERVER_URL', 'http://geoserver.org/')
-    VERSION_FILE      = ENV.fetch('VERSION_FILE', 'version.yml')
+    GEOSERVER_URL     = ENV.fetch('GEOSERVER_URL',     'http://geoserver.org/')
+    VERSION_FILE      = ENV.fetch('VERSION_FILE',      'version.yml')
     DOWNLOAD_LOCATION = ENV.fetch('DOWNLOAD_LOCATION', '/tmp')
-    HOMEBREW_PATH     = ENV.fetch('HOMEBREW_PATH', "#{Dir.home}/projects/homebrew")
+    HOMEBREW_PATH     = ENV.fetch('HOMEBREW_PATH',     "#{Dir.home}/projects/homebrew")
 
     def initialize
       @agent = Mechanize.new
@@ -85,13 +85,11 @@ module Homebrew
 
     def recipe_template
       recipe = <<-BLOCK
-require 'formula'
-
 class Geoserver < Formula
   desc "Java server to share and edit geospatial data"
-  homepage 'http://geoserver.org/'
-  url 'https://downloads.sourceforge.net/project/geoserver/GeoServer/#{@remote_version}/geoserver-#{@remote_version}-bin.zip'
-  sha256 '#{self.checksum}'
+  homepage "http://geoserver.org/"
+  url "https://downloads.sourceforge.net/project/geoserver/GeoServer/#{@remote_version}/geoserver-#{@remote_version}-bin.zip"
+  sha256 "#{self.checksum}"
 
   def install
     libexec.install Dir['*']
@@ -115,7 +113,7 @@ class Geoserver < Formula
   end
 
   test do
-    assert_match /geoserver path/, shell_outout("\#{bin}/geoserver")
+    assert_match /geoserver path/, shell_output("\#{bin}/geoserver")
   end
 end
       BLOCK
